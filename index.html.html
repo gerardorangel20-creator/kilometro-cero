@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kilómetro Cero · Marketing de Transporte | Captación de conductores en el Corredor del Henares</title>
+<meta name="description" content="Marketing especializado para empresas de transporte del Corredor del Henares. Captación de conductores y marca de empresa, hecho por un gestor de tráfico.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asfalto:#1F2937;
+    --asfalto-2:#151C28;
+    --ambar:#F59E0B;
+    --blanco:#FAFAF7;
+    --gris:#6B7280;
+    --gris-claro:#E5E7EB;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  body{font-family:'Barlow',sans-serif;color:var(--asfalto);background:var(--blanco);line-height:1.6;font-size:17px;}
+  h1,h2,h3{font-family:'Barlow Condensed',sans-serif;font-weight:600;line-height:1.1;text-transform:uppercase;letter-spacing:.5px;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+  /* Línea de carretera: divisor firma */
+  .carretera{height:6px;background:var(--asfalto);position:relative;overflow:hidden;}
+  .carretera::after{content:"";position:absolute;top:2px;left:0;right:0;height:2px;
+    background:repeating-linear-gradient(90deg,var(--ambar) 0 40px,transparent 40px 70px);}
+
+  /* Header */
+  header{background:var(--asfalto);color:var(--blanco);padding:18px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--blanco);}
+  .logo .badge{background:var(--ambar);color:var(--asfalto);font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;font-size:20px;padding:6px 10px;border-radius:8px;letter-spacing:1px;}
+  .logo .nombre{font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;}
+  .logo .nombre small{display:block;font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:2.5px;color:var(--ambar);text-transform:uppercase;}
+  .btn{display:inline-block;background:var(--ambar);color:var(--asfalto);font-family:'Barlow Condensed',sans-serif;
+    font-size:19px;font-weight:600;text-transform:uppercase;letter-spacing:1px;text-decoration:none;
+    padding:12px 26px;border-radius:8px;transition:transform .15s ease, background .15s ease;}
+  .btn:hover{background:#FFB524;transform:translateY(-2px);}
+  .btn:focus-visible{outline:3px solid var(--blanco);outline-offset:2px;}
+  .btn-header{padding:9px 18px;font-size:16px;}
+
+  /* Hero */
+  .hero{background:var(--asfalto);color:var(--blanco);padding:72px 0 88px;position:relative;}
+  .hero h1{font-size:clamp(38px,6vw,64px);max-width:17ch;}
+  .hero h1 .subrayado{color:var(--ambar);}
+  .hero p.sub{margin-top:22px;font-size:19px;color:#C9CED6;max-width:52ch;}
+  .hero .cta-zona{margin-top:36px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .hero .nota{font-size:14px;color:var(--gris);}
+  .hero .credencial{margin-top:48px;display:inline-flex;align-items:center;gap:10px;
+    border:1px solid #374151;border-radius:8px;padding:10px 16px;font-size:15px;color:#C9CED6;}
+  .hero .credencial b{color:var(--ambar);font-weight:500;}
+
+  /* Problema */
+  .problema{padding:72px 0;}
+  .eyebrow{font-family:'Barlow',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--ambar);font-weight:500;margin-bottom:12px;}
+  .problema h2{font-size:clamp(28px,4vw,40px);max-width:24ch;}
+  .problema p{margin-top:18px;max-width:62ch;color:#374151;}
+  .problema .dato{margin-top:28px;border-left:4px solid var(--ambar);padding:6px 0 6px 20px;font-size:18px;color:var(--asfalto);}
+  .problema .dato b{font-family:'Barlow Condensed',sans-serif;font-size:26px;letter-spacing:.5px;}
+
+  /* Servicios */
+  .servicios{background:#FFFFFF;padding:72px 0;border-top:1px solid var(--gris-claro);border-bottom:1px solid var(--gris-claro);}
+  .servicios h2{font-size:clamp(28px,4vw,40px);}
+  .grid{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
+  .card{background:var(--blanco);border:1px solid var(--gris-claro);border-radius:12px;padding:28px;}
+  .card .icono{width:46px;height:46px;border-radius:10px;background:var(--asfalto);color:var(--ambar);
+    display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;}
+  .card h3{font-size:22px;letter-spacing:1px;}
+  .card p{margin-top:10px;font-size:15.5px;color:#374151;}
+
+  /* Por qué */
+  .porque{padding:72px 0;}
+  .porque .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  .porque h2{font-size:clamp(28px,4vw,40px);}
+  .porque p{margin-top:16px;color:#374151;}
+  .porque ul{margin-top:20px;list-style:none;}
+  .porque li{padding:10px 0 10px 34px;position:relative;color:#374151;}
+  .porque li::before{content:"✓";position:absolute;left:0;top:8px;width:22px;height:22px;border-radius:6px;
+    background:var(--ambar);color:var(--asfalto);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  @media (max-width:760px){.porque .wrap{grid-template-columns:1fr;}}
+
+  /* Proceso: hitos kilométricos */
+  .proceso{background:var(--asfalto);color:var(--blanco);padding:72px 0;}
+  .proceso h2{font-size:clamp(28px,4vw,40px);}
+  .proceso .eyebrow{color:var(--ambar);}
+  .hitos{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;}
+  .hito{border:1px solid #374151;border-radius:12px;padding:26px;background:var(--asfalto-2);}
+  .hito .marca{display:inline-block;background:var(--blanco);color:var(--asfalto);border-radius:8px;overflow:hidden;
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;text-align:center;min-width:64px;margin-bottom:16px;}
+  .hito .marca span{display:block;background:var(--ambar);font-size:13px;letter-spacing:2px;padding:2px 8px;}
+  .hito .marca b{display:block;font-size:30px;padding:2px 8px 6px;}
+  .hito h3{font-size:21px;letter-spacing:1px;}
+  .hito p{margin-top:8px;font-size:15px;color:#C9CED6;}
+
+  /* CTA final */
+  .final{padding:80px 0;text-align:center;}
+  .final h2{font-size:clamp(30px,5vw,48px);max-width:20ch;margin:0 auto;}
+  .final p{margin:18px auto 0;max-width:50ch;color:#374151;}
+  .final .btn{margin-top:32px;font-size:22px;padding:16px 36px;}
+  .final .nota{margin-top:14px;font-size:14px;color:var(--gris);}
+
+  footer{background:var(--asfalto);color:var(--gris);padding:28px 0;font-size:14px;}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  footer a{color:#C9CED6;text-decoration:none;}
+  footer a:hover{color:var(--ambar);}
+
+  /* WhatsApp flotante */
+  .wa-flotante{position:fixed;bottom:22px;right:22px;width:58px;height:58px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:50;}
+  .wa-flotante svg{width:30px;height:30px;fill:#fff;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">
+      <span class="badge">KM0</span>
+      <span class="nombre">Kilómetro Cero<small>Marketing de transporte</small></span>
+    </a>
+    <a class="btn btn-header" href="https://wa.me/34660355070?text=Hola%2C%20vengo%20de%20la%20web%20de%20Kil%C3%B3metro%20Cero">Hablamos por WhatsApp</a>
+  </div>
+</header>
+<div class="carretera"></div>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>¿Camiones parados por falta de <span class="subrayado">conductores</span>?</h1>
+    <p class="sub">Los candidatos no están en los portales de empleo: están en Facebook, TikTok y WhatsApp. Yo hago que te encuentren a ti antes que a tu competencia.</p>
+    <div class="cta-zona">
+      <a class="btn" href="https://wa.me/34660355070?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20captaci%C3%B3n%20de%20conductores">Quiero candidatos</a>
+      <span class="nota">Respuesta en menos de 24 h · Sin compromiso</span>
+    </div>
+    <div class="credencial">
+      <b>Gestor de tráfico en activo.</b>&nbsp;Conozco tu operativa desde dentro, no desde una agencia.
+    </div>
+  </div>
+</section>
+<div class="carretera"></div>
+
+<section class="problema">
+  <div class="wrap">
+    <div class="eyebrow">El problema</div>
+    <h2>El anuncio en el portal de empleo ya no funciona</h2>
+    <p>En España faltan decenas de miles de conductores profesionales y la media de edad del sector supera los 50 años. Mientras tanto, la mayoría de las empresas siguen buscando igual que en 2010: anuncio, esperar y rezar. Resultado: camiones en la campa, rutas sin cubrir y clientes que se pierden.</p>
+    <div class="dato"><b>Cada camión parado</b> te cuesta miles de euros al mes en costes fijos e ingresos perdidos. La captación ya no es un tema de RRHH: es un tema de negocio.</div>
+  </div>
+</section>
+
+<section class="servicios">
+  <div class="wrap">
+    <div class="eyebrow">Qué hago</div>
+    <h2>Tres servicios, un objetivo: que tu flota ruede</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icono">🚛</div>
+        <h3>Captación de conductores</h3>
+        <p>Campañas en Facebook, Instagram y TikTok dirigidas a conductores C+E con CAP en regla, incluidos perfiles con permisos canjeados. Candidatos directos a tu WhatsApp.</p>
+      </div>
+      <div class="card">
+        <div class="icono">🛡️</div>
+        <h3>Marca de empresa</h3>
+        <p>Vídeos de tu flota, tus rutas y tus condiciones reales. Una empresa que se muestra genera confianza: en el conductor que duda y en el cargador que compara.</p>
+      </div>
+      <div class="card">
+        <div class="icono">📍</div>
+        <h3>Presencia digital local</h3>
+        <p>Google Business optimizado, reseñas y perfiles activos. Cuando alguien busque tu empresa antes de llamarte, que lo que encuentre juegue a tu favor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="porque">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Por qué Kilómetro Cero</div>
+      <h2>Marketing hecho por alguien del transporte</h2>
+      <p>No soy una agencia que ayer llevaba restaurantes y hoy te habla de "engagement". Soy gestor de tráfico en el Corredor del Henares: he vivido la falta de conductores desde el lado de la operativa.</p>
+    </div>
+    <ul>
+      <li>Hablo tu idioma: tacógrafo, CAP, disco, campa. No me lo tienes que explicar.</li>
+      <li>Sé qué le importa a un conductor cuando compara ofertas, porque trabajo con ellos a diario.</li>
+      <li>Estoy en Alcalá de Henares: nos vemos en tu nave, no por videollamada desde otra ciudad.</li>
+      <li>Sin permanencias. Si no aporto, te vas. Así de simple.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="proceso">
+  <div class="wrap">
+    <div class="eyebrow">Cómo trabajamos</div>
+    <h2>De cero a candidatos en tres hitos</h2>
+    <div class="hitos">
+      <div class="hito">
+        <div class="marca"><span>KM</span><b>0</b></div>
+        <h3>Diagnóstico en tu nave</h3>
+        <p>Nos vemos, analizamos tu situación de plantilla, tu marca actual y qué perfiles necesitas. Gratis y sin compromiso.</p>
+      </div>
+      <div class="hito">
+        <div class="marca"><span>KM</span><b>1</b></div>
+        <h3>Campaña en marcha</h3>
+        <p>En menos de dos semanas: anuncios activos, vídeo de tu empresa y canal directo de candidatos a tu WhatsApp.</p>
+      </div>
+      <div class="hito">
+        <div class="marca"><span>KM</span><b>2</b></div>
+        <h3>Resultados medibles</h3>
+        <p>Informe mensual claro: candidatos recibidos, coste por candidato y siguientes pasos. Números, no humo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="carretera"></div>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Tu próximo conductor ya está en el móvil</h2>
+    <p>La pregunta es si va a ver tu oferta o la de otro. Cuéntame tu situación por WhatsApp y te digo, con sinceridad, si puedo ayudarte.</p>
+    <a class="btn" href="https://wa.me/34660355070?text=Hola%2C%20quiero%20un%20diagn%C3%B3stico%20para%20mi%20empresa%20de%20transporte">Pedir diagnóstico gratuito</a>
+    <div class="nota">Corredor del Henares · Alcalá, Torrejón, San Fernando, Coslada, Guadalajara</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Kilómetro Cero · Marketing de Transporte</span>
+    <span><a href="https://wa.me/34660355070">WhatsApp</a> · <a href="#">LinkedIn</a> · <a href="#">Instagram</a></span>
+  </div>
+</footer>
+
+<a class="wa-flotante" href="https://wa.me/34660355070?text=Hola%2C%20vengo%20de%20la%20web" aria-label="Abrir WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.6.8 5 2.3 7L4 29l7.2-2.2c1.9 1 4 1.6 6.2 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 22c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.1 1.3 1.3-4-.3-.4C5.7 18.4 5 16.8 5 15 5 9 9.9 4 16 4s11 5 11 11-4.9 10-11 10zm6-7.4c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1.1-1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.4c.2.2 2.3 3.5 5.6 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+</a>
+
+</body>
+</html>
