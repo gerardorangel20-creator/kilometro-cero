@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMR Automation — Kilómetro Cero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --asfalto: #111827;
+    --asfalto-2: #1F2937;
+    --asfalto-3: #2b3a4e;
+    --amber: #F59E0B;
+    --amber-suave: #fbbf24;
+    --blanco-marca: #F3F4F6;
+    --gris-texto: #9CA3AF;
+    --verde-auto: #34D399;
+    --rojo-rev: #F87171;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--asfalto);
+    color: var(--blanco-marca);
+    font-family: 'Barlow', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px clamp(20px, 5vw, 60px);
+    border-bottom: 1px solid var(--asfalto-3);
+  }
+  .marca {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .marca .km {
+    background: var(--amber);
+    color: var(--asfalto);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 20px;
+  }
+  .tagline {
+    font-size: 14px;
+    color: var(--gris-texto);
+    text-align: right;
+  }
+  @media (max-width: 640px) { .tagline { display: none; } }
+
+  .hero {
+    text-align: center;
+    padding: clamp(36px, 6vw, 64px) 20px 8px;
+  }
+  .hero .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(40px, 7vw, 72px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 8px 0 10px;
+  }
+  .hero p {
+    max-width: 560px;
+    margin: 0 auto;
+    color: var(--gris-texto);
+    font-size: clamp(16px, 2vw, 18px);
+  }
+
+  .escenario {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 10px 16px 0;
+  }
+  svg { width: 100%; height: auto; display: block; }
+
+  .via {
+    stroke-dasharray: 10 10;
+    stroke-width: 2;
+    fill: none;
+    animation: rodar 1.4s linear infinite;
+  }
+  @keyframes rodar { to { stroke-dashoffset: -40; } }
+
+  .nodo { cursor: pointer; }
+  .nodo circle.aro { transition: stroke-width .15s ease, r .15s ease; }
+  .nodo:hover circle.aro, .nodo:focus circle.aro { stroke-width: 4; }
+  .nodo.activo circle.aro { stroke-width: 4; }
+  .nodo:focus { outline: none; }
+  .nodo:focus-visible circle.aro { stroke: var(--blanco-marca); }
+
+  .halo { animation: latido 3.2s ease-in-out infinite; transform-origin: center; }
+  @keyframes latido {
+    0%, 100% { opacity: .25; transform: scale(1); }
+    50% { opacity: .55; transform: scale(1.06); }
+  }
+
+  .etq {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    fill: var(--blanco-marca);
+  }
+  .etq-sub { font-family: 'Barlow', sans-serif; fill: var(--gris-texto); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .pk {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    fill: var(--asfalto);
+  }
+
+  .panel {
+    max-width: 720px;
+    margin: 18px auto 0;
+    padding: 0 20px;
+  }
+  .panel-inner {
+    background: var(--asfalto-2);
+    border: 1px solid var(--asfalto-3);
+    border-radius: 10px;
+    padding: 22px 26px;
+    min-height: 118px;
+  }
+  .panel-inner .pk-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    background: var(--amber);
+    color: var(--asfalto);
+    padding: 1px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .panel-inner h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .panel-inner p { color: var(--gris-texto); font-size: 16px; }
+
+  .metricas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 860px;
+    margin: 44px auto 0;
+    padding: 0 20px;
+  }
+  @media (max-width: 640px) { .metricas { grid-template-columns: 1fr; } }
+  .metrica {
+    border-top: 4px solid var(--amber);
+    background: var(--asfalto-2);
+    border-radius: 0 0 10px 10px;
+    padding: 18px 20px;
+  }
+  .metrica .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: var(--amber);
+    line-height: 1.1;
+  }
+  .metrica .lbl { font-size: 15px; color: var(--gris-texto); }
+
+  footer {
+    margin-top: 56px;
+    border-top: 1px solid var(--asfalto-3);
+    padding: 28px clamp(20px, 5vw, 60px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  footer .lema {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+  }
+  footer .lema strong { color: var(--amber); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca"><span class="km">K0</span> Kilómetro Cero</div>
+  <div class="tagline">Liberamos oficinas.<br>Solo transporte.</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Automatización de tráfico</div>
+  <h1>CMR Automation</h1>
+  <p>Cada CMR que entra por vuestro correo recorre este trayecto sin que nadie de la oficina lo toque. Pulsa cada punto kilométrico para ver qué ocurre.</p>
+</section>
+
+<div class="escenario">
+<svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa del flujo CMR Automation: correo, extracción con IA, validación, ruta automática o revisión, archivo y registro">
+
+  <path class="via" d="M180 120 L360 245" stroke="#4B5563"/>
+  <path class="via" d="M680 120 L500 245" stroke="#4B5563"/>
+  <path class="via" d="M770 300 L520 300" stroke="#4B5563"/>
+  <path class="via" d="M660 470 L495 350" stroke="#34D399"/>
+  <path class="via" d="M200 470 L365 350" stroke="#F87171"/>
+  <path class="via" d="M90 300 L340 300" stroke="#4B5563"/>
+  <path class="via" d="M430 505 L430 375" stroke="#4B5563"/>
+  <path class="via" d="M430 95 L430 225" stroke="#F59E0B"/>
+
+  <g class="nodo" data-id="core" tabindex="0" role="button" aria-label="Núcleo n8n">
+    <circle class="halo" cx="430" cy="300" r="86" fill="#F59E0B" opacity=".25"/>
+    <circle class="aro" cx="430" cy="300" r="70" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
+    <circle cx="430" cy="300" r="58" fill="#F59E0B"/>
+    <text x="430" y="295" text-anchor="middle" class="pk" font-size="22">CMR</text>
+    <text x="430" y="318" text-anchor="middle" class="pk" font-size="14" opacity=".75">motor n8n</text>
+  </g>
+
+  <g class="nodo" data-id="gmail" tabindex="0" role="button" aria-label="Km 0: entrada por Gmail">
+    <circle class="aro" cx="165" cy="100" r="42" fill="#1F2937" stroke="#6B7280" stroke-width="2.5"/>
+    <text x="165" y="96" text-anchor="middle" class="etq" font-size="17">Correo</text>
+    <text x="165" y="114" text-anchor="middle" class="etq-sub" font-size="13">Gmail</text>
+    <rect x="141" y="150" width="48" height="20" rx="3" fill="#F59E0B"/>
+    <text x="165" y="165" text-anchor="middle" class="pk" font-size="14">Km 0</text>
+  </g>
+
+  <g class="nodo" data-id="vision" tabindex="0" role="button" aria-label="Km 1: lectura con inteligencia artificial">
+    <circle class="aro" cx="695" cy="100" r="42" fill="#1F2937" stroke="#A78BFA" stroke-width="2.5"/>
+    <text x="695" y="96" text-anchor="middle" class="etq" font-size="17">Lectura</text>
+    <text x="695" y="114" text-anchor="middle" class="etq-sub" font-size="13">IA visión</text>
+    <rect x="671" y="150" width="48" height="20" rx="3" fill="#F59E0B"/>
+    <text x="695" y="165" text-anchor="middle" class="pk" font-size="14">Km 1</text>
+  </g>
+
+  <g class="nodo" data-id="valida" tabindex="0" role="button" aria-label="Km 2: cruce de expedición">
+    <circle class="aro" cx="790" cy="300" r="42" fill="#1F2937" stroke="#A78BFA" stroke-width="2.5"/>
+    <text x="790" y="296" text-anchor="middle" class="etq" font-size="17">Cruce</text>
+    <text x="790" y="314" text-anchor="middle" class="etq-sub" font-size="13">expedición</text>
+    <rect x="766" y="350" width="48" height="20" rx="3" fill="#F59E0B"/>
+    <text x="790" y="365" text-anchor="middle" class="pk" font-size="14">Km 2</text>
+  </g>
+
+  <g class="nodo" data-id="auto" tabindex="0" role="button" aria-label="Km 3: ruta automática">
+    <circle class="aro" cx="675" cy="485" r="42" fill="#1F2937" stroke="#34D399" stroke-width="2.5"/>
+    <text x="675" y="481" text-anchor="middle" class="etq" font-size="17" fill="#34D399">Auto</text>
+    <text x="675" y="499" text-anchor="middle" class="etq-sub" font-size="13">confianza alta</text>
+    <rect x="651" y="415" width="48" height="20" rx="3" fill="#F59E0B"/>
+    <text x="675" y="430" text-anchor="middle" class="pk" font-size="14">Km 3</text>
+  </g>
+
+  <g class="nodo" data-id="revision" tabindex="0" role="button" aria-label="Desvío: revisión humana">
+    <circle class="aro" cx="185" cy="485" r="42" fill="#1F2937" stroke="#F87171" stroke-width="2.5"/>
+    <text x="185" y="481" text-anchor="middle" class="etq" font-size="16" fill="#F87171">Revisión</text>
+    <text x="185" y="499" text-anchor="middle" class="etq-sub" font-size="13">desvío</text>
+    <rect x="157" y="415" width="56" height="20" rx="3" fill="#F87171"/>
+    <text x="185" y="430" text-anchor="middle" class="pk" font-size="14">Desvío</text>
+  </g>
+
+  <g class="nodo" data-id="drive" tabindex="0" role="button" aria-label="Km 4: archivo en Drive">
+    <circle class="aro" cx="70" cy="300" r="42" fill="#1F2937" stroke="#6B7280" stroke-width="2.5"/>
+    <text x="70" y="296" text-anchor="middle" class="etq" font-size="17">Archivo</text>
+    <text x="70" y="314" text-anchor="middle" class="etq-sub" font-size="13">Drive</text>
+    <rect x="46" y="350" width="48" height="20" rx="3" fill="#F59E0B"/>
+    <text x="70" y="365" text-anchor="middle" class="pk" font-size="14">Km 4</text>
+  </g>
+
+  <g class="nodo" data-id="sheets" tabindex="0" role="button" aria-label="Km 5: registro en Sheets">
+    <circle class="aro" cx="430" cy="510" r="40" fill="#1F2937" stroke="#6B7280" stroke-width="2.5"/>
+    <text x="430" y="506" text-anchor="middle" class="etq" font-size="17">Registro</text>
+    <text x="430" y="524" text-anchor="middle" class="etq-sub" font-size="13">Sheets</text>
+  </g>
+
+  <g class="nodo" data-id="dash" tabindex="0" role="button" aria-label="Km final: panel resumen">
+    <circle class="aro" cx="430" cy="65" r="40" fill="#1F2937" stroke="#F59E0B" stroke-width="2.5"/>
+    <text x="430" y="61" text-anchor="middle" class="etq" font-size="17" fill="#F59E0B">Panel</text>
+    <text x="430" y="79" text-anchor="middle" class="etq-sub" font-size="13">Km final</text>
+  </g>
+</svg>
+</div>
+
+<div class="panel">
+  <div class="panel-inner" id="panel" aria-live="polite">
+    <span class="pk-badge" id="p-km">Recorrido</span>
+    <h3 id="p-titulo">Pulsa cualquier punto del trayecto</h3>
+    <p id="p-texto">Desde que el CMR entra por el correo hasta que queda archivado y registrado, la oficina no toca nada. Solo interviene si el sistema detecta algo dudoso.</p>
+  </div>
+</div>
+
+<div class="metricas">
+  <div class="metrica"><div class="num">0 clics</div><div class="lbl">en la ruta automática: el documento se archiva y registra solo</div></div>
+  <div class="metrica"><div class="num">75%</div><div class="lbl">umbral de confianza: por debajo, el CMR se desvía a revisión humana</div></div>
+  <div class="metrica"><div class="num">100%</div><div class="lbl">trazabilidad: cada documento queda registrado para reclamaciones y facturación</div></div>
+</div>
+
+<footer>
+  <div class="marca"><span class="km">K0</span> Kilómetro Cero</div>
+  <div class="lema">Liberamos oficinas. <strong>Solo transporte.</strong></div>
+</footer>
+
+<script>
+  const datos = {
+    core: ["Motor", "Núcleo n8n", "El motor que orquesta todo el trayecto: recibe, lee, valida, decide la ruta y registra cada CMR. Trabaja las 24 horas, también cuando la oficina está cerrada."],
+    gmail: ["Km 0", "Entrada por correo", "El sistema vigila el buzón. En cuanto llega un CMR adjunto (PDF o foto del conductor), arranca el recorrido. Nadie tiene que descargar ni renombrar nada."],
+    vision: ["Km 1", "Lectura con IA", "La inteligencia artificial lee el documento como lo haría un gestor: remitente, destinatario, número de expedición, fechas y firmas. Funciona incluso con fotos hechas en cabina."],
+    valida: ["Km 2", "Cruce de expedición", "El número de expedición extraído se compara contra vuestra hoja de control. Si coincide, seguimos. Si no cuadra, el documento no pasa: se desvía a revisión."],
+    auto: ["Km 3", "Ruta automática", "Cuando la lectura es fiable (confianza del 75% o superior), el CMR sigue solo: se archiva y se registra sin que nadie lo toque. Es la ruta del 80–90% de los documentos."],
+    revision: ["Desvío", "Revisión humana", "Foto borrosa, dato dudoso, expedición que no cuadra: el documento se aparta y avisa. La IA nunca da por bueno lo que no está claro. Vosotros decidís, ella hace el trabajo pesado."],
+    drive: ["Km 4", "Archivo ordenado", "Cada CMR se guarda en Drive con nombre y carpeta correctos, automáticamente. Se acabó buscar 'scan_0034.pdf' cuando un cliente reclama."],
+    sheets: ["Km 5", "Registro completo", "Cada documento queda como una fila en la hoja de control: fecha, expedición, cliente, estado. Trazabilidad total para reclamaciones, facturación y auditoría."],
+    dash: ["Km final", "Panel resumen", "Un vistazo y sabéis cómo va el mes: volumen procesado, ratio automático frente a revisión, actividad por cliente. Sin montar informes a mano."]
+  };
+  const nodos = document.querySelectorAll('.nodo');
+  function activar(n) {
+    const d = datos[n.dataset.id];
+    if (!d) return;
+    nodos.forEach(x => x.classList.remove('activo'));
+    n.classList.add('activo');
+    document.getElementById('p-km').textContent = d[0];
+    document.getElementById('p-titulo').textContent = d[1];
+    document.getElementById('p-texto').textContent = d[2];
+  }
+  nodos.forEach(n => {
+    n.addEventListener('click', () => activar(n));
+    n.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activar(n); }
+    });
+  });
+</script>
+
+</body>
+</html>
